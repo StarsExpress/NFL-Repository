@@ -1,4 +1,4 @@
-from config import LOGOS_FOLDER_PATH
+from config import LOGOS_FOLDER_PATH, TEAMS
 import os
 import pandas as pd
 from matplotlib.offsetbox import OffsetImage
@@ -16,9 +16,9 @@ def find_median(series: pd.Series):
     return round((series.iloc[(total - 1) // 2] + series.iloc[total // 2]) / 2, 1)
 
 
-def find_logos(teams: set, zoom: float):
+def find_logos(zoom: float):
     teams_logos = dict()
-    for team in teams:
+    for team in TEAMS:
         logo_path = os.path.join(LOGOS_FOLDER_PATH, f'{team}.png')
         teams_logos.update({team: OffsetImage(plt.imread(logo_path), zoom=zoom)})
     return teams_logos

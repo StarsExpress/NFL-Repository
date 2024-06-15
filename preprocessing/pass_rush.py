@@ -7,8 +7,8 @@ import pandas as pd
 needed_positions = ['DI', 'ED', 'LB']
 
 
-def preprocess_pass_rush(csv_name: str):
-    pass_rush_csv_path = os.path.join(DATA_FOLDER_PATH, f'{csv_name}.csv')
+def preprocess_pass_rush(season: int):
+    pass_rush_csv_path = os.path.join(DATA_FOLDER_PATH, f'{season} NFL Front 7 Pass Rush.csv')
     pass_rush_df = pd.read_csv(pass_rush_csv_path)
     pass_rush_df.fillna(inplace=True, value=0)
     pass_rush_df.columns = rename_pass_rush_columns(pass_rush_df.columns)
@@ -31,11 +31,11 @@ def preprocess_pass_rush(csv_name: str):
 
         positional_sheets.update({position: positional_df})
 
-    destination_path = os.path.join(DATA_FOLDER_PATH, f'{csv_name}.xlsx')
+    destination_path = os.path.join(DATA_FOLDER_PATH, f'{season} NFL Front 7 Pass Rush.xlsx')
     with pd.ExcelWriter(destination_path, engine='openpyxl') as writer:
         for position, sheet in positional_sheets.items():
             sheet.to_excel(writer, sheet_name=position, index=False)
 
 
 if __name__ == '__main__':
-    preprocess_pass_rush('2023 NFL Front 7 Pass Rush')
+    preprocess_pass_rush(2022)
