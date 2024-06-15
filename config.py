@@ -7,7 +7,7 @@ DATA_FOLDER_PATH = os.path.join(NFL_BASE_PATH, 'data')
 
 LOGOS_FOLDER_PATH = os.path.join(NFL_BASE_PATH, 'logos')
 
-PLOTS_FOLDER_PATH = os.path.join(NFL_BASE_PATH, 'plots')
+OUTPUTS_FOLDER_PATH = os.path.join(NFL_BASE_PATH, 'outputs')
 
 
 TEAMS = [
@@ -16,3 +16,8 @@ TEAMS = [
     "LA", "LAC", "LV", "MIA", "MIN", "NE", "NO", "NYG",
     "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"
 ]
+
+
+FRONT_7_NAMES = {'DI': 'Defensive Interior', 'ED': 'Edge', 'LB': 'Linebacker'}
+
+HAVOC_NOTE = 'Havoc Rate = (Sacks + QB Hits) / Pass Rush Snaps.'

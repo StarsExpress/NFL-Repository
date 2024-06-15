@@ -7,7 +7,7 @@ import pandas as pd
 needed_positions = ['DI', 'ED', 'LB']
 
 
-def preprocess_pass_rush(season: int):
+def preprocess_front_7(season: int):
     pass_rush_csv_path = os.path.join(DATA_FOLDER_PATH, f'{season} NFL Front 7 Pass Rush.csv')
     pass_rush_df = pd.read_csv(pass_rush_csv_path)
     pass_rush_df.fillna(inplace=True, value=0)
@@ -38,4 +38,5 @@ def preprocess_pass_rush(season: int):
 
 
 if __name__ == '__main__':
-    preprocess_pass_rush(2022)
+    preprocess_front_7(2022)
+    preprocess_front_7(2023)

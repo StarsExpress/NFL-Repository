@@ -8,6 +8,9 @@ def rename_pass_rush_columns(columns: list):
         if 'Team Name' in renamed_col:
             renamed_col = renamed_col.replace(' Name', '')
 
+        if 'Wins' in renamed_col:
+            renamed_col = renamed_col.replace('Pass Rush ', '')
+
         if 'Snap Counts Pass Rush' in renamed_col:
             renamed_col = renamed_col.replace('Snap Counts Pass Rush', 'PR Snaps')
 
