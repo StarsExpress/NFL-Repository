@@ -5,16 +5,17 @@ import pandas as pd
 import seaborn as sns
 from matplotlib.offsetbox import AnnotationBbox
 import matplotlib.pyplot as plt
+from adjustText import adjust_text
 
 
-logo_boxes = find_logos(0.004)
-name_size = 4
+logo_boxes = find_logos(0.006)
+name_size = 6
+line_width = 3
 plt.figure(figsize=(10, 10))
 
 
-def plot_metrics(season: int, position: str, opp_threshold: int,
-                 x_metric: str, y_metric: str, x_rate: bool = True, y_rate: bool = True,
-                 use_tps: bool = True, extra_note: str = ''):
+def plot_metrics(season: int, position: str, opp_threshold: int, x_metric: str,
+                 y_metric: str, x_rate: bool = True, y_rate: bool = True, extra_note: str = ''):
     if position not in FRONT_7_NAMES.keys():
         raise ValueError('Invalid position. Choose from DI, ED, or LB.')
 
@@ -26,13 +27,12 @@ def plot_metrics(season: int, position: str, opp_threshold: int,
     if len(pass_rush_df) <= 0:
         return
 
-    tps_suffix = 'TPS ' if use_tps else ''
-    x_axis_dict = {'metric': f'{tps_suffix}{x_metric}'}
+    x_axis_dict = {'metric': f'{x_metric}'}
     x_label_suffix = ' (%)' if x_rate else ''
     x_axis_dict.update({'col': f"{x_axis_dict['metric']}",
                         'label': f"PFF {x_axis_dict['metric']}{x_label_suffix}"})
 
-    y_axis_dict = {'metric': f'{tps_suffix}{y_metric}'}
+    y_axis_dict = {'metric': f'{y_metric}'}
     y_label_suffix = ' (%)' if y_rate else ''
     y_axis_dict.update({'col': f"{y_axis_dict['metric']}",
                         'label': f"PFF {y_axis_dict['metric']}{y_label_suffix}"})
@@ -41,18 +41,20 @@ def plot_metrics(season: int, position: str, opp_threshold: int,
     sns.scatterplot(data=pass_rush_df, x=x_axis_dict['col'],
                     y=y_axis_dict['col'], s=100, color='white')
 
+    placed_texts = []  # To prevent overlapping.
     for _, row in pass_rush_df.iterrows():  # Logo & name annotations.
         x_value, y_value = row[x_axis_dict['col']], row[y_axis_dict['col']]
         logo_box = AnnotationBbox(logo_boxes[row['Team']], (x_value, y_value),
                                   frameon=False, box_alignment=(0.5, 0.5))
         plt.gca().add_artist(logo_box)
 
-        plt.text(
-            x=1.025 * x_value, y=y_value, s=row['Player'],
+        text = plt.text(
+            x=x_value, y=y_value, s=row['Player'],
             fontdict=dict(color='black', size=name_size, ha='left', va='center')
-        )  # Ensure text is a bit righter from logo.
+        )
+        placed_texts.append(text)
 
-    title = f"{season} NFL {FRONT_7_NAMES[position]} {tps_suffix}Pass Rush {x_metric} & {y_metric}"
+    title = f"{season} NFL {FRONT_7_NAMES[position]} {x_metric} & {y_metric}"
     plt.title(title, fontsize=14, pad=40)
 
     note = f"players with at least {opp_threshold} pass rush opportunities. Source: PFF."
@@ -75,13 +77,15 @@ def plot_metrics(season: int, position: str, opp_threshold: int,
     plt.text(plt.xlim()[0], y_median, f'Median: {y_median}',
              color='black', ha='left', va='bottom')
 
+    adjust_text(placed_texts, dict(arrowstyle='-', color='black', linewidth=line_width))
+
     plot_path = os.path.join(OUTPUTS_FOLDER_PATH, f'{season}',
-                             f'{position} {tps_suffix}{x_metric} V.S {y_metric}.jpeg')
+                             f'{position} {x_metric} V.S {y_metric}.jpeg')
     plt.savefig(plot_path, dpi=300, bbox_inches='tight')
     plt.close('all')
 
 
 if __name__ == "__main__":
-    from config import HAVOC_NOTE
+    from config import HAVOC_RATE_NOTE
     plot_metrics(2023, 'DI', 170,
-                 'Win Rate', 'Havoc Rate', extra_note=HAVOC_NOTE)
+                 'TPS Win Rate', 'TPS Havoc Rate', extra_note=HAVOC_RATE_NOTE)
