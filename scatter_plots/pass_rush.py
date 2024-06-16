@@ -12,7 +12,7 @@ name_size = 4
 plt.figure(figsize=(10, 10))
 
 
-def plot_metrics(season: int, position: str, snaps_threshold: int,
+def plot_metrics(season: int, position: str, opp_threshold: int,
                  x_metric: str, y_metric: str, x_rate: bool = True, y_rate: bool = True,
                  use_tps: bool = True, extra_note: str = ''):
     if position not in FRONT_7_NAMES.keys():
@@ -22,7 +22,7 @@ def plot_metrics(season: int, position: str, snaps_threshold: int,
     pass_rush_df_dict = pd.read_excel(pass_rush_path, sheet_name=None)
 
     pass_rush_df = pass_rush_df_dict[position].dropna()
-    pass_rush_df = pass_rush_df[pass_rush_df['PR Snaps'] >= snaps_threshold]
+    pass_rush_df = pass_rush_df[pass_rush_df['PR Opp'] >= opp_threshold]
     if len(pass_rush_df) <= 0:
         return
 
@@ -55,7 +55,7 @@ def plot_metrics(season: int, position: str, snaps_threshold: int,
     title = f"{season} NFL {FRONT_7_NAMES[position]} {tps_suffix}Pass Rush {x_metric} & {y_metric}"
     plt.title(title, fontsize=14, pad=40)
 
-    note = f"players with at least {snaps_threshold} pass rush snaps. Source: PFF."
+    note = f"players with at least {opp_threshold} pass rush opportunities. Source: PFF."
     if len(extra_note) > 0:
         note += f'\n{extra_note}'
 

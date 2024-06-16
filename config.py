@@ -20,4 +20,4 @@ TEAMS = [
 
 FRONT_7_NAMES = {'DI': 'Defensive Interior', 'ED': 'Edge', 'LB': 'Linebacker'}
 
-HAVOC_NOTE = 'Havoc Rate = (Sacks + QB Hits) / Pass Rush Snaps.'
+HAVOC_NOTE = 'Havoc Rate = (Sacks + QB Hits) / Pass Rush Opportunities.'
