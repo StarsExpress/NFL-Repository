@@ -37,21 +37,20 @@ def plot_metrics(season: int, position: str, snaps_threshold: int,
     y_axis_dict.update({'col': f"{y_axis_dict['metric']}",
                         'label': f"PFF {y_axis_dict['metric']}{y_label_suffix}"})
 
-    # Use white dots to prevent blocking team logos.
+    # White dots prevent blocking team logos.
     sns.scatterplot(data=pass_rush_df, x=x_axis_dict['col'],
                     y=y_axis_dict['col'], s=100, color='white')
 
     for _, row in pass_rush_df.iterrows():  # Logo & name annotations.
         x_value, y_value = row[x_axis_dict['col']], row[y_axis_dict['col']]
-
         logo_box = AnnotationBbox(logo_boxes[row['Team']], (x_value, y_value),
                                   frameon=False, box_alignment=(0.5, 0.5))
         plt.gca().add_artist(logo_box)
 
-        plt.text(  # Ensure text is a bit righter from logo.
+        plt.text(
             x=1.025 * x_value, y=y_value, s=row['Player'],
             fontdict=dict(color='black', size=name_size, ha='left', va='center')
-        )
+        )  # Ensure text is a bit righter from logo.
 
     title = f"{season} NFL {FRONT_7_NAMES[position]} {tps_suffix}Pass Rush {x_metric} & {y_metric}"
     plt.title(title, fontsize=14, pad=40)
@@ -85,5 +84,4 @@ def plot_metrics(season: int, position: str, snaps_threshold: int,
 if __name__ == "__main__":
     from config import HAVOC_NOTE
     plot_metrics(2023, 'DI', 170,
-                 'Wins', 'Havoc', x_rate=False, y_rate=False,
-                 use_tps=True, extra_note=HAVOC_NOTE)
+                 'Win Rate', 'Havoc Rate', extra_note=HAVOC_NOTE)
