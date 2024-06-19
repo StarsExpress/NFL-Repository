@@ -142,5 +142,5 @@ if __name__ == "__main__":
     from config import HAVOC_RATE_NOTE
 
     plot_pass_rush(
-        2023, "DI", 200, "TPS Win Rate", "TPS Havoc Rate", extra_note=HAVOC_RATE_NOTE
+        2023, "ED", 140, "Win Rate", "Havoc Rate", extra_note=HAVOC_RATE_NOTE
     )
