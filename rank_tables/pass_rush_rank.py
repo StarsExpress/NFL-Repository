@@ -1,6 +1,6 @@
-from config import DATA_FOLDER_PATH
 import os
 import pandas as pd
+from config import DATA_FOLDER_PATH
 
 
 original_pass_rush_path = os.path.join(

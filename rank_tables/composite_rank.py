@@ -1,5 +1,5 @@
-from pass_rush_rank import compute_pass_rush_rank
 import pandas as pd
+from pass_rush_rank import compute_pass_rush_rank
 
 
 if __name__ == '__main__':
