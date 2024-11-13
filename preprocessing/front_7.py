@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from config import DATA_FOLDER_PATH, FRONT_7_NAMES
+from config import DATA_FOLDER_PATH, FRONT_7_NAMES, ROUNDING_DIGITS
 from utils.renamers import rename_pass_rush_columns
 
 
@@ -16,17 +16,20 @@ def preprocess_front_7(season: int):
     for position in FRONT_7_NAMES.keys():
         positional_df = pass_rush_df[pass_rush_df["Position"] == position]
 
+        positional_df["Avg PR Opp"] = positional_df["PR Opp"] / positional_df["Games"]
+        positional_df["Avg PR Opp"] = positional_df["Avg PR Opp"].round(ROUNDING_DIGITS)
+
         positional_df["Havoc"] = positional_df["Sacks"] + positional_df["Hits"]
         positional_df["Havoc Rate"] = positional_df["Havoc"] / positional_df["PR Opp"]
         positional_df["Havoc Rate"].fillna(inplace=True, value=0)
         positional_df["Havoc Rate"] *= 100
-        positional_df["Havoc Rate"] = positional_df["Havoc Rate"].round(1)
+        positional_df["Havoc Rate"] = positional_df["Havoc Rate"].round(ROUNDING_DIGITS)
 
         positional_df["Pressure Rate"] = positional_df["Pressures"] / positional_df["PR Opp"]
 
         positional_df["Pressure Rate"].fillna(inplace=True, value=0)
         positional_df["Pressure Rate"] *= 100
-        positional_df["Pressure Rate"] = positional_df["Pressure Rate"].round(1)
+        positional_df["Pressure Rate"] = positional_df["Pressure Rate"].round(ROUNDING_DIGITS)
 
         positional_df["TPS Havoc"] = positional_df["TPS Sacks"] + positional_df["TPS Hits"]
 
@@ -34,13 +37,13 @@ def preprocess_front_7(season: int):
 
         positional_df["TPS Havoc Rate"].fillna(inplace=True, value=0)
         positional_df["TPS Havoc Rate"] *= 100
-        positional_df["TPS Havoc Rate"] = positional_df["TPS Havoc Rate"].round(1)
+        positional_df["TPS Havoc Rate"] = positional_df["TPS Havoc Rate"].round(ROUNDING_DIGITS)
 
         positional_df["TPS Pressure Rate"] = positional_df["TPS Pressures"] / positional_df["TPS PR Opp"]
 
         positional_df["TPS Pressure Rate"].fillna(inplace=True, value=0)
         positional_df["TPS Pressure Rate"] *= 100
-        positional_df["TPS Pressure Rate"] = positional_df["TPS Pressure Rate"].round(1)
+        positional_df["TPS Pressure Rate"] = positional_df["TPS Pressure Rate"].round(ROUNDING_DIGITS)
 
         positional_sheets.update({position: positional_df})
 
@@ -53,5 +56,4 @@ def preprocess_front_7(season: int):
 
 
 if __name__ == "__main__":
-    preprocess_front_7(2022)
-    preprocess_front_7(2023)
+    preprocess_front_7(2024)
