@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from config import DATA_FOLDER_PATH, FRONT_7_NAMES, ROUNDING_DIGITS
-from utils.renamers import rename_pass_rush_columns
+from utils.renamers import rename_pass_rush_columns, shorten_first_name
 
 
 def preprocess_front_7(season: int):
@@ -11,6 +11,7 @@ def preprocess_front_7(season: int):
     pass_rush_df = pd.read_csv(pass_rush_csv_path)
     pass_rush_df.fillna(inplace=True, value=0)
     pass_rush_df.columns = rename_pass_rush_columns(pass_rush_df.columns)
+    pass_rush_df["Abbr Name"] = pass_rush_df["Player"].apply(shorten_first_name)
 
     positional_sheets = dict()
     for position in FRONT_7_NAMES.keys():

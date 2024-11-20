@@ -73,7 +73,7 @@ def plot_pass_rush(
         text = plt.text(
             x=x_value,
             y=y_value,
-            s=row["Player"],
+            s=row["Abbr Name"],
             fontdict=dict(color="black", size=name_size, ha="left", va="center"),
         )
         placed_texts.append(text)
@@ -135,9 +135,7 @@ def plot_pass_rush(
 
 
 if __name__ == "__main__":
-    from config import HAVOC_RATE_NOTE
-
     plot_pass_rush(
-        2024, "ED", 110,
-        "Win Rate", "Havoc Rate", extra_note=HAVOC_RATE_NOTE
+        2024, "DI", 120,
+        "TPS Win Rate", "Win Rate"
     )

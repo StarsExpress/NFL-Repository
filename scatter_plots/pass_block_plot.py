@@ -73,7 +73,7 @@ def plot_pass_block(
         text = plt.text(
             x=x_value,
             y=y_value,
-            s=row["Player"],
+            s=row["Abbr Name"],
             fontdict=dict(color="black", size=name_size, ha="left", va="center"),
         )
         placed_texts.append(text)
@@ -137,9 +137,7 @@ def plot_pass_block(
 
 
 if __name__ == "__main__":
-    from config import ALLOWED_HAVOC_RATE_NOTE
-
     plot_pass_block(
-        2024, "T", 200,
-        "TPS Allowed Havoc %", "Allowed Havoc %", extra_note=ALLOWED_HAVOC_RATE_NOTE
+        2024, "T", 250,
+        "TPS Allowed Pressure %", "Allowed Pressure %"
     )

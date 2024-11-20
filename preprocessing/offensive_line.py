@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from config import DATA_FOLDER_PATH, OL_NAMES, ROUNDING_DIGITS
-from utils.renamers import rename_pass_block_columns
+from utils.renamers import rename_pass_block_columns, shorten_first_name
 
 
 def preprocess_offensive_line(season: int):
@@ -11,6 +11,7 @@ def preprocess_offensive_line(season: int):
     pass_block_df = pd.read_csv(pass_block_csv_path)
     pass_block_df.fillna(inplace=True, value=0)
     pass_block_df.columns = rename_pass_block_columns(pass_block_df.columns)
+    pass_block_df["Abbr Name"] = pass_block_df["Player"].apply(shorten_first_name)
 
     positional_sheets = dict()
     for position in OL_NAMES.keys():

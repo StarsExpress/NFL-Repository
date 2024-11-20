@@ -1,5 +1,11 @@
 
-def rename_pass_rush_columns(columns: list[str]):
+def shorten_first_name(player_name: str) -> str:
+    names_components = player_name.split(" ")
+    if "." not in names_components[0]:  # First name isn't already shortened.
+        names_components[0] = names_components[0][0] + "."
+    return " ".join(names_components)
+
+def rename_pass_rush_columns(columns: list[str]) -> list[str]:
     renamed_cols = []
     for column in columns:
         split_text = column.split("_")
@@ -38,7 +44,7 @@ def rename_pass_rush_columns(columns: list[str]):
     return renamed_cols
 
 
-def rename_pass_block_columns(columns: list[str]):
+def rename_pass_block_columns(columns: list[str]) -> list[str]:
     renamed_cols = []
     for column in columns:
         split_text = column.split("_")
