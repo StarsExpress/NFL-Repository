@@ -9,16 +9,15 @@ from utils.logo_boxes import load_logo_boxes
 from utils.finders import find_median
 
 
-logo_boxes = load_logo_boxes()
-name_size = 6
-line_width = 3
-plt.figure(figsize=(10, 10))
-
-
 def plot_pass_block(
     season: int, position: str, non_spike_threshold: int,
     x_metric: str, y_metric: str, custom_title: str = None, extra_note: str = "",
 ):
+    plt.figure(figsize=(10, 10))
+    name_size = 6
+    line_width = 3
+    logo_boxes = load_logo_boxes()  # Each plot needs its own settings. Can't share across plots.
+
     if position not in OL_NAMES.keys():
         raise ValueError("Invalid position. Choose from T, G, or C.")
 
@@ -137,7 +136,15 @@ def plot_pass_block(
 
 
 if __name__ == "__main__":
-    plot_pass_block(
-        2024, "T", 250,
-        "TPS Allowed Pressure %", "Allowed Pressure %"
-    )
+    queries = [
+        [2024, "T", 250], [2024, "G", 250], [2024, "C", 250]
+    ]
+    for query_season, query_position, query_threshold in queries:
+        plot_pass_block(
+            query_season, query_position, query_threshold,
+            "TPS Allowed Pressure %", "Allowed Pressure %"
+        )
+        plot_pass_block(
+            query_season, query_position, query_threshold,
+            "TPS Allowed Havoc %", "Allowed Havoc %"
+        )

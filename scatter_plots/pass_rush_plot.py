@@ -9,16 +9,15 @@ from utils.logo_boxes import load_logo_boxes
 from utils.finders import find_median
 
 
-logo_boxes = load_logo_boxes()
-name_size = 6
-line_width = 3
-plt.figure(figsize=(10, 10))
-
-
 def plot_pass_rush(
     season: int, position: str, opp_threshold: int,
     x_metric: str, y_metric: str, custom_title: str = None, extra_note: str = "",
 ):
+    plt.figure(figsize=(10, 10))
+    name_size = 6
+    line_width = 3
+    logo_boxes = load_logo_boxes()  # Each plot needs its own settings. Can't share across plots.
+
     if position not in FRONT_7_NAMES.keys():
         raise ValueError("Invalid position. Choose from DI, ED, or LB.")
 
@@ -136,7 +135,19 @@ def plot_pass_rush(
 
 if __name__ == "__main__":
     from config import HAVOC_NOTE
-    plot_pass_rush(
-        2024, "DI", 120,
-        "Win Rate", "Havoc Rate", extra_note=HAVOC_NOTE
-    )
+
+    queries = [
+        [2024, "DI", 120], [2024, "ED", 170]
+    ]
+    for query_season, query_position, query_threshold in queries:
+        plot_pass_rush(
+            query_season, query_position, query_threshold,
+            "TPS Win Rate", "Win Rate"
+        )
+
+    queries[1][2] = 130
+    for query_season, query_position, query_threshold in queries:
+        plot_pass_rush(
+            query_season, query_position, query_threshold,
+            "Win Rate", "Havoc Rate", extra_note=HAVOC_NOTE
+        )
