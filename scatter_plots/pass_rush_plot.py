@@ -28,6 +28,8 @@ def plot_pass_rush(
 
     pass_rush_df = pass_rush_df_dict[position].dropna()
     pass_rush_df = pass_rush_df[pass_rush_df["PR Opp"] >= opp_threshold]
+    pass_rush_df = pass_rush_df[pass_rush_df["Player"] != "Aidan Hutchinson"]
+
     if len(pass_rush_df) <= 0:
         return
 
@@ -137,7 +139,7 @@ if __name__ == "__main__":
     from config import HAVOC_NOTE
 
     queries = [
-        [2024, "DI", 120], [2024, "ED", 170]
+        [2024, "DI", 140], [2024, "ED", 170]
     ]
     for query_season, query_position, query_threshold in queries:
         plot_pass_rush(
@@ -145,7 +147,6 @@ if __name__ == "__main__":
             "TPS Win Rate", "Win Rate"
         )
 
-    queries[1][2] = 130
     for query_season, query_position, query_threshold in queries:
         plot_pass_rush(
             query_season, query_position, query_threshold,
