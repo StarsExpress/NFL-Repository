@@ -138,16 +138,20 @@ if __name__ == "__main__":
     from config import HAVOC_NOTE
 
     queries = [
-        [2024, "DI", 160], [2024, "ED", 200]
+        [2024, "DI", 150], [2024, "ED", 190]
     ]
     for query_season, query_position, query_threshold in queries:
         plot_pass_rush(
             query_season, query_position, query_threshold,
             "TPS Win Rate", "Win Rate"
         )
-
     for query_season, query_position, query_threshold in queries:
         plot_pass_rush(
             query_season, query_position, query_threshold,
             "Win Rate", "Havoc Rate", extra_note=HAVOC_NOTE
+        )
+    for query_season, query_position, query_threshold in queries:
+        plot_pass_rush(
+            query_season, query_position, query_threshold,
+            "Pressure Rate", "Havoc Rate", extra_note=HAVOC_NOTE
         )
