@@ -4,7 +4,7 @@ from config import DATA_FOLDER_PATH, OL_NAMES, ROUNDING_DIGITS
 from utils.renamers import rename_pass_block_columns, shorten_first_name
 
 
-def preprocess_offensive_line(season: int):
+def preprocess_offensive_line(season: int) -> None:
     pass_block_csv_path = os.path.join(
         DATA_FOLDER_PATH, f"{season} NFL OL Pass Block.csv"
     )

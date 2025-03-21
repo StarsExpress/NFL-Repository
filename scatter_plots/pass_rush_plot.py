@@ -12,7 +12,7 @@ from utils.finders import find_median
 def plot_pass_rush(
     season: int, position: str, opp_threshold: int,
     x_metric: str, y_metric: str, custom_title: str = None, extra_note: str = "",
-):
+) -> None:
     plt.figure(figsize=(10, 10))
     name_size = 6
     line_width = 3
@@ -144,11 +144,6 @@ if __name__ == "__main__":
         plot_pass_rush(
             query_season, query_position, query_threshold,
             "TPS Win Rate", "Win Rate"
-        )
-    for query_season, query_position, query_threshold in queries:
-        plot_pass_rush(
-            query_season, query_position, query_threshold,
-            "Win Rate", "Havoc Rate", extra_note=HAVOC_NOTE
         )
     for query_season, query_position, query_threshold in queries:
         plot_pass_rush(
