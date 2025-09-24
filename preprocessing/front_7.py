@@ -57,4 +57,4 @@ def preprocess_front_7(season: int) -> None:
 
 
 if __name__ == "__main__":
-    preprocess_front_7(2024)
+    preprocess_front_7(2025)
