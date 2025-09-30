@@ -27,7 +27,7 @@ def plot_pass_rush(
     pass_rush_df_dict = pd.read_excel(pass_rush_path, sheet_name=None)
 
     pass_rush_df = pass_rush_df_dict[position].dropna()
-    pass_rush_df = pass_rush_df[pass_rush_df["PR Snaps"] >= opp_threshold]
+    pass_rush_df = pass_rush_df[pass_rush_df["PR Opp"] >= opp_threshold]
 
     if len(pass_rush_df) <= 0:
         return
@@ -82,7 +82,7 @@ def plot_pass_rush(
     plt.title(title, fontsize=14, pad=40)
 
     note = (
-        f"players with at least {opp_threshold} pass rush snaps. Source: PFF."
+        f"players with at least {opp_threshold} pass rush opportunities. Source: PFF."
     )
     if len(extra_note) > 0:
         note += f"\n{extra_note}"
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     from config import HAVOC_NOTE
 
     queries = [
-        [2025, "DI", 35], [2025, "ED", 40]
+        [2025, "DI", 50], [2025, "ED", 50]
     ]
     for query_season, query_position, query_threshold in queries:
         plot_pass_rush(
